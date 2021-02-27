@@ -46,7 +46,11 @@ class TitleFragment : Fragment() {
         //}
 
         // Third way:
-        val listener = Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment)
-        binding.playButton.setOnClickListener(listener)
+        // val listener = Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment)
+        // binding.playButton.setOnClickListener(listener)
+
+        binding.playButton.setOnClickListener {
+            it.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToGameFragment())
+        }
     }
 }

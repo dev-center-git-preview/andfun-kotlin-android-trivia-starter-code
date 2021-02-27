@@ -37,7 +37,7 @@ class GameOverFragment : Fragment() {
 
     private fun setListeners(binding: FragmentGameOverBinding) {
         binding.tryAgainButton.setOnClickListener {
-            it.findNavController().navigate(R.id.action_gameOverFragment_to_gameFragment)
+            it.findNavController().navigate(GameOverFragmentDirections.actionGameOverFragmentToGameFragment())
         }
     }
 }
