@@ -29,12 +29,13 @@ import com.example.android.navigation.databinding.FragmentGameWonBinding
 class GameWonFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         val binding: FragmentGameWonBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_game_won, container, false)
+
         setHasOptionsMenu(true)
         addListeners(binding)
         showToast()
+
         return binding.root
     }
 
@@ -46,11 +47,22 @@ class GameWonFragment : Fragment() {
         menu.findItem(R.id.share).isVisible = isShareMenuItemVisible
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.share -> shareSuccess()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun shareSuccess() {
+        startActivity(getShareIntent())
+    }
+
     private fun getShareIntent(): Intent {
         val args = GameWonFragmentArgs.fromBundle(arguments!!)
         val text = getString(R.string.share_success_text, args.numQuestions, args.numCorrect)
 
-        return Intent(Intent.ACTION_SEND).putExtra(Intent.EXTRA_TEXT, text)
+        return Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)
     }
 
     private fun showToast() {
