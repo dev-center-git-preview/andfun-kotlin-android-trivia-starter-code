@@ -37,6 +37,15 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         navController = this.findNavController(R.id.nav_host_fragment)
 
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            val lockMode = when(destination.id) {
+                controller.graph.startDestination -> DrawerLayout.LOCK_MODE_UNLOCKED
+                else -> DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+            }
+
+            binding.drawerLayout.setDrawerLockMode(lockMode)
+        }
+
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
     }
