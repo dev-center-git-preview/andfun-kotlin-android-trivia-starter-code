@@ -16,10 +16,9 @@
 
 package com.example.android.navigation
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -37,6 +36,21 @@ class GameWonFragment : Fragment() {
         addListeners(binding)
         showToast()
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.winner_menu, menu)
+
+        val isShareMenuItemVisible = !(getShareIntent().resolveActivity(activity!!.packageManager) == null)
+        menu.findItem(R.id.share).isVisible = isShareMenuItemVisible
+    }
+
+    private fun getShareIntent(): Intent {
+        val args = GameWonFragmentArgs.fromBundle(arguments!!)
+        val text = getString(R.string.share_success_text, args.numQuestions, args.numCorrect)
+
+        return Intent(Intent.ACTION_SEND).putExtra(Intent.EXTRA_TEXT, text)
     }
 
     private fun showToast() {
